@@ -89,6 +89,36 @@
         .submit-btn:hover, button:hover {
             background-color: #004d40;
         }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            form {
+                width: 100%;
+                box-shadow: none;
+                padding: 10px;
+            }
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            th, td {
+                padding: 5px;
+                font-size: 14px;
+            }
+            input, select, .submit-btn, button {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .photo-frame {
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+        }
     </style>
     <script>
         function previewImage(event, index) {
