@@ -76,7 +76,7 @@
             border-radius: 5px;
             display: none;
         }
-        .submit-btn {
+        .submit-btn, button {
             margin-top: 20px;
             padding: 12px 25px;
             font-size: 18px;
@@ -86,7 +86,7 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .submit-btn:hover {
+        .submit-btn:hover, button:hover {
             background-color: #004d40;
         }
     </style>
@@ -125,8 +125,8 @@
     <form action="submit_form.php" method="post" enctype="multipart/form-data">
         <h1>Cricket Tournament</h1>
         <h2>Team Registration</h2>
-        <button onclick="window.location.href='index.html'">Home</button>
-        <button onclick="window.history.back()">Back</button>
+        <button type="button" onclick="window.location.href='index.html'">Home</button>
+        <button type="button" onclick="window.history.back()">Back</button>
         <input type="text" name="team_name" required placeholder="Enter Team Name">
         <input type="text" name="address" required placeholder="Enter Address">
         <input type="tel" name="contact_number" pattern="[0-9]{10}" required placeholder="Enter Contact Number (10 digits)">
