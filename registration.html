@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            text-align: center;
+        }
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        h1, h2 {
+            font-family: 'Arial Black', sans-serif;
+        }
+        h1 { color: #d32f2f; font-size: 28px; }
+        h2 { color: #00796b; font-size: 24px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4db6ac;
+            color: white;
+        }
+        input, select {
+            width: 95%;
+            padding: 8px;
+            margin: 5px auto;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .photo-frame {
+            width: 80px;
+            height: 100px;
+            border: 2px dashed #00796b;
+            background-color: #b2dfdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .photo-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+        .remove-photo {
+            margin-top: 5px;
+            cursor: pointer;
+            background-color: #d32f2f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .submit-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 18px;
+            color: white;
+            background-color: #00796b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #004d40;
+        }
+    </style>
+    <script>
+        function previewImage(event, index) {
+            let input = event.target;
+            let img = document.getElementById(`preview_${index}`);
+            let frame = input.previousElementSibling;
+            let removeBtn = document.getElementById(`remove_${index}`);
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    frame.innerHTML = '';
+                    frame.appendChild(img);
+                    removeBtn.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function removeImage(index) {
+            let input = document.getElementById(`player_photo_${index}`);
+            let img = document.getElementById(`preview_${index}`);
+            let frame = input.previousElementSibling;
+            let removeBtn = document.getElementById(`remove_${index}`);
+            input.value = "";
+            img.style.display = 'none';
+            frame.innerHTML = '<span>Upload</span>';
+            removeBtn.style.display = 'none';
+        }
+    </script>
+</head>
+<body>
+    <form action="submit_form.php" method="post" enctype="multipart/form-data">
+        <h1>Cricket Tournament</h1>
+        <h2>Team Registration</h2>
+        
+        <input type="text" name="team_name" required placeholder="Enter Team Name">
+        <input type="text" name="address" required placeholder="Enter Address">
+        <input type="tel" name="contact_number" pattern="[0-9]{10}" required placeholder="Enter Contact Number (10 digits)">
+
+        <table>
+            <tr>
+                <th>Sr. No.</th>
+                <th>Player Name</th>
+                <th>Player Type</th>
+                <th>Batting Style</th>
+                <th>Bowling Style</th>
+                <th>Photo</th>
+            </tr>
+            <tbody>
+                <script>
+                    for (let i = 1; i <= 13; i++) {
+                        document.write(`
+                            <tr>
+                                <td>${i}</td>
+                                <td><input type="text" name="player_name_${i}" required placeholder="Player Name"></td>
+                                <td>
+                                    <select name="player_type_${i}" required>
+                                        <option value="">Select</option>
+                                        <option value="Batsman">Batsman</option>
+                                        <option value="Bowler">Bowler</option>
+                                        <option value="Allrounder">Allrounder</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="batting_style_${i}" required>
+                                        <option value="">Select</option>
+                                        <option value="Right Handed">Right Handed</option>
+                                        <option value="Left Handed">Left Handed</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select name="bowling_style_${i}" required>
+                                        <option value="">Select</option>
+                                        <option value="Right Arm Medium Fast">Right Arm Medium Fast</option>
+                                        <option value="Left Arm Medium Fast">Left Arm Medium Fast</option>
+                                        <option value="NA">NA</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="photo-frame" onclick="document.getElementById('player_photo_${i}').click();">
+                                        <img id="preview_${i}" src="#" alt="Preview">
+                                        <span>Upload</span>
+                                    </div>
+                                    <input type="file" id="player_photo_${i}" name="player_photo_${i}" accept="image/*" style="display: none;" onchange="previewImage(event, ${i})">
+                                    <button id="remove_${i}" class="remove-photo" onclick="removeImage(${i}); return false;">Remove</button>
+                                </td>
+                            </tr>
+                        `);
+                    }
+                </script>
+            </tbody>
+        </table>
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</body>
+</html>
