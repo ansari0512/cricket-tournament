@@ -16,24 +16,28 @@
             background: #337ab7;
             color: white;
             padding: 15px;
-            font-size: 22px;
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
         }
         nav {
-    background: #286090;
-    padding: 5px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
+            background: #286090;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
         nav a {
             color: white;
             text-decoration: none;
             padding: 10px 15px;
             font-size: 18px;
+            border-radius: 5px;
+            margin: 5px;
         }
-        /* Marquee Container */
         .marquee-container {
             width: 100%;
             overflow: hidden;
@@ -45,16 +49,12 @@
             align-items: center;
             justify-content: center;
         }
-        /* Moving Text */
         .tournament-date {
             color: #32CD32;
             font-size: 18px;
             font-weight: bold;
             white-space: nowrap;
             display: inline-block;
-            background: none; color: #32CD32; -webkit-text-fill-color: #32CD32;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: #32CD32;
             position: relative;
             animation: marquee 4s ease-in-out infinite alternate;
         }
@@ -63,79 +63,69 @@
             100% { transform: translateX(50%); }
         }
         .image-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px;
-    justify-content: center;
-    align-items: center;
-}
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            justify-content: center;
+            align-items: center;
+        }
         .image-box {
-    background: #ddd;
-    width: 100vw;
-    height: 50vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid black;
-    font-size: 20px;
-    font-weight: bold;
-}
-        .full-width {
-            grid-column: span 2;
-        }
-        @media (max-width: 600px) {
-            .image-container {
-                display: flex;
-                flex-direction: column;
-            }
-            .tournament-date {
-                font-size: 14px;
-            }
-            nav a {
-                font-size: 16px;
-                padding: 8px;
-            }
-        }
-            .blink-button {
-    background: #ff0000;
-    color: white;
-    padding: 12px 25px;
-    font-size: 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    font-weight: bold;
-    text-transform: uppercase;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-    transition: all 0.3s ease-in-out;
-    animation: pulse 1.5s infinite;
-}
-@keyframes pulse {
-    0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); }
-    50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 0, 0, 1); }
-    100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); }
-}
-        @keyframes blink {
-            0% { opacity: 1; }
-            100% { opacity: 0.5; }
+            background: #ddd;
+            width: 100%;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid black;
+            font-size: 20px;
+            font-weight: bold;
         }
         .image-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-</style>
+        .blink-button {
+            background: #ff0000;
+            color: white;
+            padding: 12px 25px;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            transition: all 0.3s ease-in-out;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); }
+            50% { transform: scale(1.1); box-shadow: 0 0 20px rgba(255, 0, 0, 1); }
+            100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 0, 0, 0.7); }
+        }
+        @media (max-width: 768px) {
+            nav a {
+                font-size: 16px;
+                padding: 8px;
+            }
+            .tournament-date {
+                font-size: 14px;
+            }
+            .image-box {
+                height: 30vh;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header style="background: #337ab7; color: white; padding: 15px; font-size: 28px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); font-family: 'Arial Black', sans-serif;">
+    <header>
         ✨ FIROZ SHAH CRICKET TOURNAMENT - ODAJHAR 🏏
     </header>
     
-    <nav style="display: flex; align-items: center; justify-content: center; position: relative;">
-        
-        <div style="display: flex; gap: 15px; justify-content: center; width: 100%;">
-        <a href="index.html" style="background: #28a745; color: white; padding: 10px 15px; font-size: 18px; text-decoration: none; border-radius: 5px;">🏠 Home</a>
+    <nav>
+        <a href="index.html" style="background: #28a745;">🏠 Home</a>
         <a href="registration.html">Registration</a>
         <a href="teams.html">Teams</a>
         <a href="schedule.html">Schedule</a>
@@ -144,14 +134,12 @@
         <a href="contact.html">Contact us</a>
     </nav>
     
-    
     <div class="marquee-container">
         <div class="tournament-date">🏏 Tournament Start Date : 20 January 2025 (Monday) 🏆</div>
     </div>
     
-    <div style="margin: 20px; text-align: center;">
-        <button onclick="window.location.href = 'registration.html'" class="blink-button" 
-                style="background: #ff0000; color: white; padding: 10px 20px; font-size: 18px; border: none; cursor: pointer; border-radius: 5px;">
+    <div style="margin: 20px;">
+        <button onclick="window.location.href = 'registration.html'" class="blink-button">
             Register Your Team
         </button>
     </div>
@@ -159,7 +147,7 @@
     <div class="image-container">
         <div class="image-box"><img src="image1.jpg" alt="Image 1"></div>
         <div class="image-box"><img src="image2.jpg" alt="Image 2"></div>
-        <div class="image-box full-width"><img src="image3.jpg" alt="Image 3"></div>
+        <div class="image-box"><img src="image3.jpg" alt="Image 3"></div>
     </div>
 
 </body>
