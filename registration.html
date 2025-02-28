@@ -9,11 +9,11 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f4f8;
+            background-color: #e0f7fa;
             text-align: center;
         }
         form {
-            max-width: 95%;
+            max-width: 800px;
             margin: 20px auto;
             padding: 20px;
             border-radius: 10px;
@@ -21,10 +21,10 @@
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
         h1, h2 {
-            font-family: 'Arial Black', sans-serif;
+            font-family: Consolas, monospace;
         }
         h1 { color: #d32f2f; font-size: 28px; }
-        h2 { color: #00796b; font-size: 24px; }
+        h2 { color: #388e3c; font-size: 24px; }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -36,17 +36,17 @@
             text-align: center;
         }
         th {
-            background-color: #4db6ac;
+            background-color: #80cbc4;
             color: white;
         }
         input, select {
-            width: 95%;
-            padding: 8px;
-            margin: 5px auto;
-            display: block;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-align: center;
+            width: 90%;
+            padding: 5px;
+        }
+        .photo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .photo-frame {
             width: 80px;
@@ -58,15 +58,15 @@
             justify-content: center;
             cursor: pointer;
             position: relative;
-            overflow: hidden;
         }
         .photo-frame img {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
             display: none;
         }
         .remove-photo {
+            display: none;
             margin-top: 5px;
             cursor: pointer;
             background-color: #d32f2f;
@@ -74,9 +74,9 @@
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
-            display: none;
         }
-        .submit-btn, button {
+        .submit-btn {
+            margin-top: 20px;
             padding: 12px 25px;
             font-size: 18px;
             color: white;
@@ -85,47 +85,88 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .submit-btn:hover, button:hover {
-            background-color: #005f4b;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 24px; }
-            h2 { font-size: 20px; }
-            .submit-btn, button {
-                font-size: 16px;
-                padding: 10px 20px;
-            }
+        .submit-btn:hover {
+            background-color: #004d40;
         }
     </style>
+    <script>
+        function previewImage(event, index) {
+            let input = event.target;
+            let frame = document.getElementById(`frame_${index}`);
+            let removeBtn = document.getElementById(`remove_${index}`);
+            let img = document.getElementById(`preview_${index}`);
+            
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    frame.style.border = 'none';
+                    frame.innerHTML = '';
+                    frame.appendChild(img);
+                    removeBtn.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+        function removeImage(index) {
+            let frame = document.getElementById(`frame_${index}`);
+            let input = document.getElementById(`player_photo_${index}`);
+            let removeBtn = document.getElementById(`remove_${index}`);
+            let img = document.getElementById(`preview_${index}`);
+            
+            input.value = "";
+            img.style.display = 'none';
+            frame.innerHTML = 'Upload Photo';
+            frame.style.border = '2px dashed #00796b';
+            removeBtn.style.display = 'none';
+        }
+
+        window.onload = function() {
+            console.log("DOM Loaded. Checking tbody...");
+            let tbody = document.querySelector("tbody");
+            
+            if (!tbody) {
+                console.error("Error: <tbody> element not found!");
+                return;
+            }
+            
+            console.log("Adding 13 player rows...");
+            for (let i = 1; i <= 13; i++) {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${i}</td>
+                    <td><input type="text" name="player_name_${i}" required></td>
+                    <td><select name="player_type_${i}" required><option value="">Select</option><option value="Batsman">Batsman</option><option value="Bowler">Bowler</option><option value="Allrounder">Allrounder</option></select></td>
+                    <td><select name="batting_style_${i}" required><option value="">Select</option><option value="Right Handed">Right Handed</option><option value="Left Handed">Left Handed</option></select></td>
+                    <td><select name="bowling_style_${i}" required><option value="">Select</option><option value="Right Arm Medium Fast">Right Arm Medium Fast</option><option value="Left Arm Medium Fast">Left Arm Medium Fast</option><option value="NA">NA</option></select></td>
+                    <td class="photo-container">
+                        <div id="frame_${i}" class="photo-frame" onclick="document.getElementById('player_photo_${i}').click();">Upload Photo</div>
+                        <input type="file" id="player_photo_${i}" class="photo-input" name="player_photo_${i}" accept="image/*" onchange="previewImage(event, ${i})" style="display: none;">
+                        <img id="preview_${i}" src="#" alt="Preview" style="display:none;">
+                        <button id="remove_${i}" class="remove-photo" onclick="removeImage(${i}); return false;">Remove</button>
+                    </td>`;
+                tbody.appendChild(row);
+            }
+            console.log("Rows added successfully!");
+        };
+    </script>
 </head>
 <body>
-    <form>
-        <h1>Team Registration</h1>
-        <h2>Register your team for the tournament</h2>
+    <form action="submit_form.php" method="post" enctype="multipart/form-data">
+        <h1>Cricket Tournament</h1>
+        <h2>Team Registration</h2>
         <table>
             <tr>
+                <th>Sr. No.</th>
                 <th>Player Name</th>
+                <th>Player Type</th>
+                <th>Batting Style</th>
+                <th>Bowling Style</th>
                 <th>Photo</th>
-                <th>Role</th>
             </tr>
-            <tr>
-                <td><input type="text" name="player1_name" placeholder="Player 1 Name"></td>
-                <td>
-                    <div class="photo-frame">
-                        <img src="" alt="Player 1 Photo">
-                    </div>
-                    <button type="button" class="remove-photo">Remove Photo</button>
-                </td>
-                <td>
-                    <select name="player1_role">
-                        <option value="batsman">Batsman</option>
-                        <option value="bowler">Bowler</option>
-                        <option value="allrounder">All-Rounder</option>
-                    </select>
-                </td>
-            </tr>
-            <!-- Add more rows as needed -->
+            <tbody></tbody>
         </table>
         <button type="submit" class="submit-btn">Submit</button>
     </form>
