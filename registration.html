@@ -154,9 +154,11 @@
 <body>
     <form action="submit_form.php" method="post" enctype="multipart/form-data">
         <h1>Cricket Tournament</h1>
-        <h2>Team Registration</h2>
-        <button type="button" onclick="window.location.href='index.html'">Home</button>
-        <button type="button" onclick="window.history.back()">Back</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; position: relative;">
+            <a href="index.html" style="position: absolute; left: 10px; top: 10px; background: #28a745; color: white; padding: 10px 15px; font-size: 18px; text-decoration: none; border-radius: 5px;">🏠 Home</a>
+            <h2 style="margin: auto;">Team Registration</h2>
+            <a href="javascript:history.back()" style="position: absolute; right: 10px; top: 10px; background: #ff9800; color: white; padding: 10px 15px; font-size: 18px; text-decoration: none; border-radius: 5px;">🔙 Back</a>
+        </div>
         <input type="text" name="team_name" required placeholder="Enter Team Name">
         <input type="text" name="address" required placeholder="Enter Address">
         <input type="tel" name="contact_number" pattern="[0-9]{10}" required placeholder="Enter Contact Number (10 digits)">
