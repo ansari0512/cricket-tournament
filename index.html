@@ -16,7 +16,7 @@
             background: #337ab7;
             color: white;
             padding: 15px;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -26,15 +26,14 @@
             background: #286090;
             padding: 10px;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-wrap: wrap;
+            justify-content: center;
         }
         nav a {
             color: white;
             text-decoration: none;
-            padding: 10px;
-            font-size: 16px;
+            padding: 8px 12px;
+            font-size: 14px;
             border-radius: 5px;
             margin: 5px;
         }
@@ -51,28 +50,28 @@
         }
         .tournament-date {
             color: #32CD32;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
+            white-space: nowrap;
             display: inline-block;
-            animation: marquee 5s ease-in-out infinite alternate;
+            position: absolute;
+            animation: marquee 5s linear infinite alternate;
         }
         @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(50%); }
+            0% { left: 0; }
+            100% { left: 50%; transform: translateX(-50%); }
         }
         .image-container {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            padding: 20px;
-            justify-content: center;
+            padding: 10px;
             align-items: center;
         }
         .image-box {
             background: #ddd;
-            width: 90%;
-            height: auto;
-            max-height: 40vh;
+            width: 95%;
+            max-height: 35vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -86,44 +85,31 @@
         .blink-button {
             background: #ff0000;
             color: white;
-            padding: 12px 20px;
-            font-size: 16px;
+            padding: 10px 16px;
+            font-size: 14px;
             border: none;
             cursor: pointer;
             border-radius: 8px;
             font-weight: bold;
             text-transform: uppercase;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-            transition: all 0.3s ease-in-out;
             animation: pulse 1.5s infinite;
         }
-        @media (max-width: 768px) {
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @media (max-width: 480px) {
+            header {
+                font-size: 16px;
+            }
             nav {
                 flex-direction: column;
             }
             nav a {
-                font-size: 14px;
-                padding: 8px;
-            }
-            .tournament-date {
-                font-size: 14px;
-            }
-            .image-box {
-                width: 95%;
-                max-height: 35vh;
-            }
-        }
-        @media (max-width: 480px) {
-            header {
-                font-size: 18px;
-            }
-            nav a {
                 font-size: 12px;
                 padding: 6px;
-            }
-            .blink-button {
-                font-size: 14px;
-                padding: 10px 16px;
             }
             .image-box {
                 width: 100%;
