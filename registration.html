@@ -89,6 +89,28 @@
         .submit-btn:hover {
             background-color: #004d40;
         }
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+            .submit-btn {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+            th, td {
+                font-size: 12px;
+                padding: 6px;
+            }
+            .submit-btn {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
     </style>
     <script>
         function previewImage(event, index) {
@@ -129,7 +151,7 @@
         <input type="text" name="team_name" required placeholder="Enter Team Name">
         <input type="text" name="address" required placeholder="Enter Address">
         <input type="tel" name="contact_number" pattern="[0-9]{10}" required placeholder="Enter Contact Number (10 digits)">
-
+ 
         <table>
             <tr>
                 <th>Sr. No.</th>
