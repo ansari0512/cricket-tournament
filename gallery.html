@@ -11,17 +11,23 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
         .container {
             width: 90%;
             max-width: 400px;
-            background: #fff;
-            padding: 20px;
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            padding: 10px 20px 20px 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #ddd;
+            box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            overflow: hidden;           
+}
+
+            
         }
         h2 {
             text-align: center;
@@ -153,13 +159,12 @@
                 const div = document.createElement('div');
                 div.classList.add('player-entry');
                 div.innerHTML = `<div>
-                                    <strong>${name}</strong>
+                                    <strong>${++playerCount}. ${name}</strong>
                                     <span>${type}</span>
                                     <span>${batting}</span>
                                     ${(type === 'Bowler' || type === 'Allrounder') ? `<span>${bowling}</span>` : ''}
                                 </div><img src="${e.target.result}" alt="Player Photo">`;
                 playerList.appendChild(div);
-                playerCount++;
                 if (playerCount === 13) {
                     document.getElementById('registerTeam').classList.remove('hidden');
                 }
