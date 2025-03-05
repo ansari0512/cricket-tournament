@@ -3,75 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Gallery</title>
+    <title>Player Registration</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            background: #f0f0f0;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        header {
-            background: #337ab7;
-            color: white;
-            padding: 15px;
-            font-size: 22px;
-        }
-        .gallery-container {
-            max-width: 900px;
-            margin: 20px auto;
-            background: white;
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: #fff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+        h2 {
+            text-align: center;
+            color: #333;
         }
-        .gallery img {
-            width: 200px;
-            height: 150px;
-            margin: 10px;
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
         }
-        @media (max-width: 768px) {
-            .gallery img {
-                width: 150px;
-                height: 100px;
-            }
+        input::placeholder {
+            color: #aaa;
         }
-        @media (max-width: 480px) {
-            header {
-                font-size: 18px;
-            }
-            .gallery img {
-                width: 100px;
-                height: 75px;
-            }
+        button {
+            width: 100%;
+            background: #28a745;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #218838;
+        }
+        #playerList {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .player-entry {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .player-entry div {
+            flex: 2;
+            min-width: 220px;
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+        .player-entry img {
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            object-fit: cover;
+        }
+        .hidden {
+            display: none;
         }
     </style>
 </head>
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="index.html" style="background: #28a745; color: white; padding: 12px 20px; font-size: 20px; text-decoration: none; border-radius: 8px;">🏠 Home</a>
-    </div>
 <body>
-    
-    <header>
-        Photo Gallery
-    </header>
-    
-    <div class="gallery-container">
-        <h2>Tournament Highlights</h2>
-        <div class="gallery">
-            <img src="image1.jpg" alt="Match 1">
-            <img src="image2.jpg" alt="Match 2">
-            <img src="image3.jpg" alt="Match 3">
-            <img src="image4.jpg" alt="Match 4">
-        </div>
+    <div class="container">
+        <h2>Add Player</h2>
+        <form id="playerForm">
+            <input type="text" id="playerName" placeholder="Player Name" required oninput="toProperCase(this)">
+            <select id="playerType" required onchange="toggleBowlingStyle()">
+                <option value="">Select Player Type</option>
+                <option value="Batsman">Batsman</option>
+                <option value="Bowler">Bowler</option>
+                <option value="Allrounder">Allrounder</option>
+            </select>
+            <select id="battingStyle" required>
+                <option value="">Select Batting Style</option>
+                <option value="Right Handed">Right Handed</option>
+                <option value="Left Handed">Left Handed</option>
+            </select>
+            <div id="bowlingStyleContainer" class="hidden">
+                <select id="bowlingStyle">
+                    <option value="">Select Bowling Style</option>
+                    <option value="Right Arm Medium Fast">Right Arm Medium Fast</option>
+                    <option value="Left Arm Medium Fast">Left Arm Medium Fast</option>
+                    <option value="NA">NA</option>
+                </select>
+            </div>
+            <input type="file" id="playerPhoto" accept="image/*" required>
+            <button type="button" onclick="addPlayer()">Add Player</button>
+        </form>
+        <div id="playerList"></div>
+        <button id="registerTeam" class="hidden" onclick="registerTeam()">Register Your Team</button>
     </div>
+    <script>
+        let playerCount = 0;
+        function toggleBowlingStyle() {
+            const playerType = document.getElementById('playerType').value;
+            const bowlingStyleContainer = document.getElementById('bowlingStyleContainer');
+            bowlingStyleContainer.classList.toggle('hidden', !(playerType === 'Bowler' || playerType === 'Allrounder'));
+        }
+        function addPlayer() {
+            if (playerCount >= 13) {
+                alert('Maximum 13 players can be added!');
+                return;
+            }
+            const name = document.getElementById('playerName').value.trim();
+            const type = document.getElementById('playerType').value;
+            const batting = document.getElementById('battingStyle').value;
+            const bowling = document.getElementById('bowlingStyle').value;
+            const photoInput = document.getElementById('playerPhoto');
+            const photo = photoInput.files[0];
+            
+            if (!name || !type || !batting || !photo) {
+                alert('Please fill all required fields, including photo upload');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const playerList = document.getElementById('playerList');
+                const div = document.createElement('div');
+                div.classList.add('player-entry');
+                div.innerHTML = `<div>
+                                    <strong>${name}</strong>
+                                    <span>${type}</span>
+                                    <span>${batting}</span>
+                                    ${(type === 'Bowler' || type === 'Allrounder') ? `<span>${bowling}</span>` : ''}
+                                </div><img src="${e.target.result}" alt="Player Photo">`;
+                playerList.appendChild(div);
+                playerCount++;
+                if (playerCount === 13) {
+                    document.getElementById('registerTeam').classList.remove('hidden');
+                }
+                document.getElementById('playerForm').reset();
+                toggleBowlingStyle();
+            };
+            reader.readAsDataURL(photo);
+        }
+        function toProperCase(input) {
+            input.value = input.value.replace(/\b\w/g, char => char.toUpperCase());
+        }
+        function registerTeam() {
+            alert('Team Registered Successfully!');
+        }
+    </script>
 </body>
 </html>
