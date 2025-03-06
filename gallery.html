@@ -19,19 +19,36 @@
             width: 90%;
             max-width: 400px;
             background: linear-gradient(to bottom, #ffffff, #f8f9fa);
-            padding: 10px 20px 20px 20px;
+            padding: 5px 20px 20px 20px;
             border-radius: 10px;
             border: 2px solid #ddd;
             box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.15);
             text-align: center;
-            overflow: hidden;           
+            overflow: hidden;
+            top:0px;
 }
 
             
-        }
         h2 {
             text-align: center;
             color: #333;
+            margin-top: 5px; /* Halki si gap */
+            margin-bottom: 10px; /* Neeche spacing */
+        }
+        .home-btn {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 20px;
+            background: #0056b3;
+            border-radius: 5px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .home-btn:hover {
+            background: #003d82;
         }
         input, select {
             width: 100%;
@@ -102,6 +119,7 @@
 </head>
 <body>
     <div class="container">
+        <a href="index.html" class="home-btn">Home</a>
         <h2>Add Player</h2>
         <form id="playerForm">
             <input type="text" id="playerName" placeholder="Player Name" required oninput="toProperCase(this)">
